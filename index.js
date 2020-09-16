@@ -1,7 +1,7 @@
+require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const auth = require('./auth.json')
-const _data = require('./data.json')
 const fs = require('fs')
 
 client.commands = new Discord.Collection()
@@ -24,7 +24,6 @@ fs.readdir('./events/', (err, files) => {
 	})
 })
 
-//client.login(process.env.BOT_TOKEN)
-client.login(auth.token)
+client.login(process.env.BOT_TOKEN)
 
 //client.on("error", (e) => console.error(e))

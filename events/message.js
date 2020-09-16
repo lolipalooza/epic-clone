@@ -1,28 +1,75 @@
-const rand = require('../functions/utils').rand
-const fs = require('fs')
+const help			= require('../commands/help')
+const storage		= require('../commands/storage')
+const status		= require('../commands/status')
+const location		= require('../commands/location')
+const action		= require('../commands/action')
+const chatmachine	= require('../commands/chatmachine')
+
+const schedule = require('../utils/schedules')
 
 module.exports = (client, message) => {
-	
-	let prefix = JSON.parse( fs.readFileSync('./data.json') ).prefix
-
-	let words = "(Shelitos|Hielitos|Yelitos|Cirno|" + client.user.id + "|Hielos|hielocos|yelocos|yelos|shelos|chirunito|chiruno|nalgas heladas)"
-	let shelitos_pattern = new RegExp(words, 'gi')
-	
-	if ( /^yelitos di:\s*?(.+?)$/i.test(message.content) ) {
-		message.delete()
-			.then(msg => msg.channel.send( msg.content.match( /^yelitos di:\s*?(.+?)$/i )[1] ))
-			.catch(console.error)
-	} else if ( shelitos_pattern.test(message.content) && message.author.id != client.user.id ) { // Are they talking to me?
-		message.channel.send('`' + message.author.username + '` ' + ['Cy.','Ño.'][rand(0,1)])
+	if ( /^sd\.ayuda/i.test(message.content) ) {
+		return help(message)
 	}
 	
-	if (message.content.indexOf(prefix)=== 0) {
-		const args = message.content.slice(prefix.length).trim().split(/ +/g)
-		const command = args.shift().toLowerCase()
-		const cmd = client.commands.get(command)
-		const mensaje = message.content.toString().toLowerCase()
-		if (cmd) {
-			cmd.run(client, message, args,mensaje)
+	if ( /^sd\.iniciar/i.test(message.content) ) {
+		storage.init(message)
+	}
+	
+	if ( /^sd\.status$/i.test(message.content) ) {
+		status(message)
+	}
+	
+	if ( /^sd\.status\.ubicacion/i.test(message.content) || /^sd.ciudad$/i.test(message.content) ) {
+		location.get(message)
+	}
+	
+	if ( /^sd\.ciudad\.ir(_a)?\(.+?\)$/i.test(message.content) || /^sd\.viaje\(.+?\)$/i.test(message.content) ) {
+		location.set(message)
+	}
+	
+	if ( /^sd\.acciones$/i.test(message.content) ) {
+		action.get(message)
+	}
+	
+	{
+		let _message = message
+		let _action = action.listen(_message)
+		if ( _action )
+			action.exec(_message, _action)
+	}
+	
+	if ( /^sd\.msj .+$/i.test(message.content) ) {
+		let msg = message.content.match(/^sd\.msj (.+?)$/i)[1]
+		let response = chatmachine(msg)
+		message.channel.send( response )
+	}
+	
+	if ( /^sd\.test$/i.test(message.content) ) {
+	}
+	
+	if ( /^debug\.waifus \d+$/i.test(message.content) ) {
+		let id = message.content.match(/\d+/)[0]
+		let waifus = require("../data/waifus")
+		let response = ""
+		if (waifus[id]) {
+			let date = require('../utils/schedules').date
+			response += "```" + waifus[id].name + "```\n"
+			for (let i=0; i<7; i++)
+				response += "`schedule[" + i + "]`: " + waifus[id].schedules[i].join(", ") + "\n\n"
+			response += "current date: `" + date + "`\n"
+		} else {
+			response += "⚠ `waifus[" + id + "]` is not defined"
 		}
+		message.channel.send(response)
+	}
+	
+	if ( /^debug\.waifus\(\d+\)\.mover\(\w+\)$/i.test(message.content) ) {
+		let matches = message.content.match(/^debug\.waifus\((\d+)\)\.mover\((\w+)\)$/i)
+		let id = matches[1]
+		let place = matches[2]
+		let waifus = require("../data/waifus")
+		waifus[id].schedules[0][new Date().getHours()] = place
+		message.channel.send("```DEBUG```Haz forzado a ***" + waifus[id].name + "*** a estar en *" + place + "* durante la siguiente hora (" + new Date().getHours() + ":" + new Date().getMinutes() + ")")
 	}
 }

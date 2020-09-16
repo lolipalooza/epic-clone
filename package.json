@@ -1,11 +1,16 @@
 {
-  "name": "shelitos-bot",
+  "name": "sim-date-bot",
   "version": "1.0.0",
-  "description": "Cy.",
   "main": "index.js",
-  "author": "Sloth- / Mumifaggie Lalunande~",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "unirest": "^0.6.0"
+    "discord.js": "^11.4.2",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
