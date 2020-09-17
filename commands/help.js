@@ -3,7 +3,7 @@ const fs = require('fs')
 
 exports.run = async(client, message, args, level) => {
 	//let prefix = JSON.parse( fs.readFileSync('./data.json') ).prefix
-	let prefix = process.env.PREFIX
+	let prefix = CONFIG_PREFIX
 	let command = args[0] || null;
 	let embed = new Discord.RichEmbed()
 		.setAuthor(message.author.username, message.author.avatarURL)
@@ -18,7 +18,7 @@ exports.run = async(client, message, args, level) => {
 		embed.setFooter("Shelitos~ - Un bot qliao para pasar el rato...", client.user.avatarURL)
 		embed.setAuthor("Lista de Comandos", client.user.avatarURL)
 		embed.setDescription("**Usa** ``" +`${prefix}help <nombre del comando>`+"`` **para más detalles.**"
-							+"\n**Agrega el prefijo `.` ante cada comando.**");
+							+"\n**Agrega el prefijo `" +`${prefix.trim()}`+ "` ante cada comando.**");
 		//embed.setThumbnail()
 		const sorted = myCommands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
 		let o="";

@@ -2,6 +2,17 @@ module.exports.rand = (min,max) => {
     return Math.floor((Math.random() * (max-min+1)) + min)
 }
 
+module.exports.emoji = (client,entry) => {
+	// is entry a number (id) ?
+	if (typeof(entry) == "number") {
+		let id = entry
+		return client.emojis.get(id)
+	} else if (typeof(entry) == "string") {
+		let name = entry
+		return client.emojis.find(emoji => emoji.name === name)
+	} else return ""
+}
+
 // Debugging only
 module.exports.getMinsMaxs = (min, max) => {
 	var _min = (max-min)/2,

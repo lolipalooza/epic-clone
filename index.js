@@ -4,6 +4,8 @@ const client = new Discord.Client()
 const auth = require('./auth.json')
 const fs = require('fs')
 
+CONFIG_PREFIX = "f "
+
 client.commands = new Discord.Collection()
 
 fs.readdir("./commands/", (err, files) => {
