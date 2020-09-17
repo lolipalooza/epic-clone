@@ -2,7 +2,8 @@ const fs = require('fs')
 
 module.exports = (client, message) => {
 	
-	let prefix = "f "
+	//let prefix = JSON.parse( fs.readFileSync('./data.json') ).prefix
+	let prefix = process.env.PREFIX
 	
 	if (message.content.indexOf(prefix)=== 0) {
 		const args = message.content.slice(prefix.length).trim().split(/ +/g)
