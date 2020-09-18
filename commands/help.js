@@ -55,8 +55,8 @@ exports.run = async(client, message, args, level) => {
 		return message.channel.send({embed});
 		
 	}else{
-		if (client.commands.has(command) || client.command_aliases.has(command)){
-			let _command = client.commands.get(command) || client.command_aliases.get(command);
+		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" "))){
+			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" "));
 			let _aliases = _command.help.aliases.join("`, `")
 			_aliases = _aliases ? ", `"+_aliases+"`" : ""
 			embed.setTitle(`${_command.help.title}`)

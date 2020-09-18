@@ -6,20 +6,17 @@ module.exports = (client, message) => {
 	let prefix = CONFIG_PREFIX
 	
 	if (message.content.indexOf(prefix)=== 0) {
-		const args = message.content.slice(prefix.length).trim().split(/ +/g)
-		const command = args.shift().toLowerCase()
-		const cmd = client.commands.get(command)
-		const alias = client.command_aliases.get(command)
-		const mensaje = message.content.toString().toLowerCase()
-		if (cmd) {
-			cmd.run(client, message, args, mensaje)
-		} else if (alias) {
-			alias.run(client, message, args, mensaje)
-		}
-		
-		client.commands.forEach(command => {
-			if (new RegExp("^"+prefix.trim()+" +"+command).test(message.content)){
-				
+		client.commands.forEach((command, cmd) => {
+			let aliases = command.help.aliases.join("|")
+			aliases = aliases ? "|"+aliases : ""
+			if (new RegExp("^"+prefix.trim()+" +(?:"+cmd+aliases+")($| )").test(message.content)){
+				let match = message.content.match(new RegExp("^"+prefix.trim()+" +(?:"+cmd+aliases+") +(.+?)$"))
+				if (match && match.length>1){
+					const args = match[1].trim().split(/ +/g)
+					command.run(client, message, args)
+				} else {
+					command.run(client, message, [])
+				}
 			}
 		})
 	}
