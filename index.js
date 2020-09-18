@@ -7,14 +7,19 @@ const fs = require('fs')
 CONFIG_PREFIX = "f "
 
 client.commands = new Discord.Collection()
+client.command_aliases = new Discord.Collection()
 
 fs.readdir("./commands/", (err, files) => {
     if (err) return console.log(err)
     files.forEach(file => {
         if (!file.endsWith(".js")) return
         let props = require(`./commands/${file}`)
-        let commandName = file.split(".")[0]
+        let commandName = props.help.name //file.split(".")[0]
         client.commands.set(commandName, props)
+		if (props.help.aliases.length > 0)
+			props.help.aliases.forEach(alias => {
+				client.command_aliases.set(alias, props)
+			})
     })
 })
 

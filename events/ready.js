@@ -9,7 +9,5 @@ module.exports = client => {
            type: "WATCHING"
        }
     })
-	
-	schedules.build()
 }
 
