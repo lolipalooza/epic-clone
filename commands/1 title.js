@@ -7,7 +7,8 @@ exports.help = {
 	category: ":medal: Statistics commands :medal:",
 	category_order: 1,
 	title: "Title",
-	description: "-",
-	usage: "title",
-	aliases: []
+	description: "Used to choose a title, see all titles with `"+CONFIG_PREFIX+"title`",
+	usage: "title [ID]",
+	aliases: [],
+	higher_tiers: "none",
 }

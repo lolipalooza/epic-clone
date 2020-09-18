@@ -8,10 +8,12 @@ exports.run = async (client, message, args) => {
 exports.help = {
 	name: "test",
 	title: "Test",
-	description: "Comando para probar weas y debuggear el bot qliao."
+	description: client => {
+		return "Comando para probar weas y debuggear el bot qliao."
 				+"\n\nMira que bonitos mis emojis "
 				+emoji(client,"epiccoin")+" "+emoji(client,"edgysword")+" "+emoji(client,"ancientdragon")
-				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword"),
+				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword")
+	},
 	usage: "test",
 	aliases: [],
 	higher_tiers: "none",

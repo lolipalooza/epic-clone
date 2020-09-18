@@ -9,5 +9,6 @@ exports.help = {
 	title: "Coinflip",
 	description: "-",
 	usage: "coinflip",
-	aliases: [ 'cf' ]
+	aliases: [ 'cf' ],
+	higher_tiers: "none",
 }

@@ -9,5 +9,6 @@ exports.help = {
 	title: "Trade",
 	description: "-",
 	usage: "trade",
-	aliases: []
+	aliases: [],
+	higher_tiers: "none",
 }

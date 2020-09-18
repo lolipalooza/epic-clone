@@ -7,7 +7,8 @@ exports.help = {
 	category: ":medal: Statistics commands :medal:",
 	category_order: 1,
 	title: "Professions",
-	description: "-",
+	description: "Shows the progress of your professions\nGet info about a specific professions with `professions [profession]`",
 	usage: "professions",
-	aliases: [ 'pr' ]
+	aliases: [ 'profession', 'pr' ],
+	higher_tiers: "none",
 }

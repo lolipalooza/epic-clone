@@ -9,5 +9,6 @@ exports.help = {
 	title: "Lootbox",
 	description: "-",
 	usage: "lootbox",
-	aliases: []
+	aliases: [],
+	higher_tiers: "none",
 }

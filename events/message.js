@@ -12,9 +12,15 @@ module.exports = (client, message) => {
 		const alias = client.command_aliases.get(command)
 		const mensaje = message.content.toString().toLowerCase()
 		if (cmd) {
-			cmd.run(client, message, args,mensaje)
+			cmd.run(client, message, args, mensaje)
 		} else if (alias) {
-			alias.run(client, message, args,mensaje)
+			alias.run(client, message, args, mensaje)
 		}
+		
+		client.commands.forEach(command => {
+			if (new RegExp("^"+prefix.trim()+" +"+command).test(message.content)){
+				
+			}
+		})
 	}
 }

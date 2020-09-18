@@ -9,5 +9,6 @@ exports.help = {
 	title: "Blackjack",
 	description: "-",
 	usage: "blackjack",
-	aliases: [ 'bj' ]
+	aliases: [ 'bj' ],
+	higher_tiers: "none",
 }

@@ -60,7 +60,7 @@ exports.run = async(client, message, args, level) => {
 			let _aliases = _command.help.aliases.join("`, `")
 			_aliases = _aliases ? ", `"+_aliases+"`" : ""
 			embed.setTitle(`${_command.help.title}`)
-			embed.setDescription(`${_command.help.description}`)
+			embed.setDescription( typeof(_command.help.description)=="string" ? _command.help.description : _command.help.description(client) )
 			embed.addField(`Usage`, "`"+`${prefix}${_command.help.usage}`+"`")
 			embed.addField("Alias", "`"+`${_command.help.name}`+"`"+_aliases)
 			embed.addField("Higher Tiers", `${_command.help.higher_tiers}`)

@@ -7,7 +7,8 @@ exports.help = {
 	category: ":medal: Statistics commands :medal:",
 	category_order: 1,
 	title: "Inventory",
-	description: "-",
-	usage: "inventory",
-	aliases: [ 'i', 'inv' ]
+	description: "Shows your inventory",
+	usage: "inventory [@player]",
+	aliases: [ 'i', 'inv' ],
+	higher_tiers: "none",
 }
