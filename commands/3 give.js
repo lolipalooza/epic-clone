@@ -7,8 +7,8 @@ exports.help = {
 	category: ":moneybag: Economy commands :moneybag:",
 	category_order: 3,
 	title: "Give",
-	description: "-",
-	usage: "give",
+	description: "Used to give coins to another player",
+	usage: "give [@player] [amount]",
 	aliases: [],
 	higher_tiers: "none",
 }

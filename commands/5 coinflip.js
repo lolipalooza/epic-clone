@@ -7,8 +7,8 @@ exports.help = {
 	category: ":game_die: Gambling commands :game_die:",
 	category_order: 5,
 	title: "Coinflip",
-	description: "-",
-	usage: "coinflip",
+	description: "Used to bet your coins by flipping a coin",
+	usage: "coinflip [h/t] [amount]",
 	aliases: [ 'cf' ],
 	higher_tiers: "none",
 }

@@ -7,8 +7,8 @@ exports.help = {
 	category: ":game_die: Gambling commands :game_die:",
 	category_order: 5,
 	title: "Slots",
-	description: "-",
-	usage: "slots",
+	description: "Used to bet your coins in a slot machine, you win if you get at least 3 slots of the same type",
+	usage: "slots [amount]",
 	aliases: [],
 	higher_tiers: "none",
 }

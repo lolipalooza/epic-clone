@@ -7,8 +7,8 @@ exports.help = {
 	category: ":moneybag: Economy commands :moneybag:",
 	category_order: 3,
 	title: "Trade",
-	description: "-",
-	usage: "trade",
+	description: "Used to trade with the **EPIC NPC**",
+	usage: "trade [ID] [amount]",
 	aliases: [],
 	higher_tiers: "none",
 }
