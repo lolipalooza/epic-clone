@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
 		"Consumables", ""
 		+""+emoji(client,"lifepotion")+" **life potion**: 1095\n"
 		+""+emoji(client,"cookie")+" **arena cookie**: 6176\n"
-		//+""+emoji(client,"cookie")+" **arena cookie**: 6176\n" // me falta el lootbox spot
+		+""+emoji(client,"edgylootbox")+" **edgy lootbox**: 1\n"
 		+""+emoji(client,"cointrumpet")+" **coin trumpet**: 2\n"
 		+""+emoji(client,"epicseed")+" **epic seed**: 3\n"
 		+""+emoji(client,"ultrabait")+" **ultra bait**: 1\n"
