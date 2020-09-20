@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
 		+""+emoji(client,"coin")+" **Coins**: 2,458,321\n"
 		+""+emoji(client,"epiccoin")+" **EPIC coins**: 688\n"
 		+""+emoji(client,"epicrpgbank")+" **Bank**: 520,000,000", true)
-	embed.setFooter("RANK: 976", client.user.avatarURL)
+	embed.setFooter("RANK: -1", client.user.avatarURL)
 	
 	message.channel.send( {embed} )
 }
