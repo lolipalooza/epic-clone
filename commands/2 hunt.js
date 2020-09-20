@@ -1,7 +1,26 @@
+const Discord = require('discord.js')
 const emoji = require('../functions/utils.js').emoji
+const rand = require('../functions/utils.js').rand
 
 exports.run = async (client, message, args) => {
-	message.channel.send( "Hunt" )
+	let monsterDropEvent = rand(0,100)
+	let monsterdrops = [
+	{icon:emoji(client,"wolfskin"),		name:"wolf skin"},
+	{icon:emoji(client,"zombieeye"),	name:"zombie eye"},
+	{icon:emoji(client,"unicornhorn"),	name:"unicorn horn"},
+	{icon:emoji(client,"mermaidhair"),	name:"mermaid hair"},
+	{icon:emoji(client,"chip"),			name:"chip"},
+	{icon:emoji(client,"dragonscale"),	name:"dragon scale"},
+	]
+	let monsterdrop = monsterdrops[rand(0,monsterdrops.length-1)]
+	let icon = monsterdrop.icon
+	let drop = monsterdrop.name
+	message.channel.send(
+		"**"+message.author.username+"** found and killed a :ghoul: **GHOUL**\n"
+		+"Earned 333 coins and 409 XP\n"
+		+"Lost 28 HP, remaining HP is 172/200"
+		+(monsterDropEvent<4?"\n**"+message.author.username+"** got an "+icon+" "+drop+"":"")
+		+(false?"\n**"+message.author.username+" leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE":""))
 }
 
 exports.help = {

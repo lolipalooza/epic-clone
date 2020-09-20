@@ -1,7 +1,7 @@
 const emoji = require('../functions/utils.js').emoji
 
 exports.run = async (client, message, args) => {
-	message.channel.send( "Heal" )
+	message.channel.send( true?"**"+message.author.username+"**, your life has been restored":"**"+message.author.username+"**, your life is maxed out" )
 }
 
 exports.help = {
