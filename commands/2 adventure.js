@@ -1,7 +1,10 @@
 const emoji = require('../functions/utils.js').emoji
 
 exports.run = async (client, message, args) => {
-	message.channel.send( "Adventure" )
+	message.channel.send( "**"+message.author.username+"** found and killed a :mutantshoe: **MUTANT SHOE**\n"
+		+"Earned 1,612 coins and 2,371 XP\n"
+		+"Lost 5301 HP, remaining HP is -438/475"
+		+(false?"\n**"+message.author.username+" leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE":""))
 }
 
 exports.help = {

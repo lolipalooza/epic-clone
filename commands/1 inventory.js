@@ -7,7 +7,8 @@ exports.run = async (client, message, args) => {
 	embed.setColor(message.guild.me.displayHexColor)
 	embed.setAuthor(message.author.username+"'s horse", message.author.displayAvatarURL)
 	embed.addField(
-		"Items", ""
+		"Items", "No items"
+		//+"No items\n" // inventario vacío
 		+":fish: **normie fish**: 4\n"
 		+":tropical_fish: **golden fish**: 6\n"
 		+""+emoji(client,"epicfish")+" **epic fish**: 6\n"
@@ -28,6 +29,7 @@ exports.run = async (client, message, args) => {
 		+"", true)
 	embed.addField(
 		"Consumables", ""
+		//+"No items\n" // inventario vacío
 		+""+emoji(client,"lifepotion")+" **life potion**: 1095\n"
 		+""+emoji(client,"cookie")+" **arena cookie**: 6176\n"
 		+""+emoji(client,"edgylootbox")+" **edgy lootbox**: 1\n"
