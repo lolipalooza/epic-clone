@@ -12,14 +12,27 @@ exports.run = async (client, message, args) => {
 	{icon:emoji(client,"chip"),			name:"chip"},
 	{icon:emoji(client,"dragonscale"),	name:"dragon scale"},
 	]
+	let lootboxes = [
+	{icon:emoji(client,"commonlootbox"),name:"common lootbox"},
+	{icon:emoji(client,"uncommonlootbox"),name:"uncommon lootbox"},
+	{icon:emoji(client,"rarelootbox"),name:"rare lootbox"},
+	{icon:emoji(client,"epiclootbox"),name:"epic lootbox"},
+	{icon:emoji(client,"edgylootbox"),name:"edgy lootbox"},
+	]
 	let monsterdrop = monsterdrops[rand(0,monsterdrops.length-1)]
+	let lootbox = lootboxes[rand(0,lootboxes.length-1)]
 	let icon = monsterdrop.icon
 	let drop = monsterdrop.name
+	let md_message = "\n**"+message.author.username+"** got an "+icon+" "+drop+""
+	icon = lootbox.icon
+	drop = lootbox.name
+	let lb_message = "\n**"+message.author.username+"** got a "+drop+" "+icon+""
+	let msg = rand(0,1)==0 ? md_message : lb_message
 	message.channel.send(
 		"**"+message.author.username+"** found and killed a :ghoul: **GHOUL**\n"
 		+"Earned 333 coins and 409 XP\n"
 		+"Lost 28 HP, remaining HP is 172/200"
-		+(monsterDropEvent<4?"\n**"+message.author.username+"** got an "+icon+" "+drop+"":"")
+		+(monsterDropEvent<4?msg:"")
 		+(false?"\n**"+message.author.username+" leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE":""))
 }
 

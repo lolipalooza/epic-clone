@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
 	embed.setColor(message.guild.me.displayHexColor)
 	embed.setAuthor(message.author.username+"'s horse", message.author.displayAvatarURL)
 	embed.addField(
-		"Items", "No items"
+		"Items", ""
 		//+"No items\n" // inventario vacío
 		+":fish: **normie fish**: 4\n"
 		+":tropical_fish: **golden fish**: 6\n"

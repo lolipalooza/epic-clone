@@ -1,7 +1,32 @@
+const Discord = require('discord.js')
 const emoji = require('../functions/utils.js').emoji
 
 exports.run = async (client, message, args) => {
-	message.channel.send( "Miniboss" )
+	let embed = new Discord.RichEmbed()
+	
+	embed.setColor(message.guild.me.displayHexColor)
+	embed.setAuthor(message.author.username+"'s miniboss", message.author.displayAvatarURL)
+	embed.setDescription("Help **"+message.author.username+"** defeat :theragingburrito: **THE RAGING BURRITO**")
+	embed.addField(
+		"Type `fight` to help and get a reward!", ""
+		+"**"+message.author.username+"** ~-~ "+emoji(client,"epicrpgsword")+" AT: 273\n"
+		+":theragingburrito: **THE RAGING BURRITO** ~-~ "+emoji(client,"epicrpgsword")+" AT: 275")
+	message.channel.send( {embed} )
+	
+	embed = new Discord.RichEmbed()
+	embed.setAuthor(message.author.username+"'s miniboss", message.author.displayAvatarURL)
+	embed.addField(
+		":theragingburrito: THE RAGING BURRITO HAS BEEN DEFEATED!", ""
+		+":crown: **"+message.author.username+"**\n"
+		+"+93,305 "+emoji(client,"coin")+" coins")
+	embed.addField(
+		":dagger: Pink, :star2::zap:SOU:zap::star2:, !Rael ✞ Eichman, MicxD, Natural, bunny.ai11:rabbit:, Bruh Moment",
+		"+1,866 "+emoji(client,"coin")+" coins")
+	embed.addField(
+		"Miniboss boost", ""
+		+"**Players**: "+message.author.username+"\n"
+		+"**Reward bonus**: x1.01 "+emoji(client,"coin")+" coins")
+	message.channel.send( {embed} )
 }
 
 exports.help = {
