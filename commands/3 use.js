@@ -1,5 +1,9 @@
 exports.run = async (client, message, args) => {
-	message.channel.send( "Use" )
+	if (args.length>0) {
+		message.channel.send( ""+message.author.toString()+", what are you trying to use? check the name of the item again" )
+	} else {
+		message.channel.send( ""+message.author.toString()+", the correct usage of this command is `"+CONFIG_PREFIX+"use [item]`" )
+	}
 }
 
 exports.help = {
