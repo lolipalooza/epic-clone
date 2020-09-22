@@ -1,7 +1,17 @@
+const Discord = require('discord.js')
 const emoji = require('../functions/utils.js').emoji
+const rand = require('../functions/utils.js').rand
 
 exports.run = async (client, message, args) => {
-	message.channel.send( "Fish" )
+	let amount = rand(1,3)
+	let tier = rand(1,100)
+	
+	if (tier>99)
+		message.channel.send( "**WOOOAAAA!! "+message.author.username+"** got "+1+" "+emoji(client,"epicfish")+" **EPIC** fish" )
+	else if (tier>80)
+		message.channel.send( "**"+message.author.username+"** got "+amount+" :tropical_fish: golden fish" )
+	else
+		message.channel.send( "**"+message.author.username+"** got "+amount+" :fish: normie fish" )
 }
 
 exports.help = {
