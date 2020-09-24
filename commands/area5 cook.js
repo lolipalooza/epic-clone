@@ -8,13 +8,8 @@ exports.run = async (client, message, args) => {
 exports.help = {
 	name: "cook",
 	title: "Cook",
-	description: client => {
-		return "Comando para probar weas y debuggear el bot qliao."
-				+"\n\nMira que bonitos mis emojis "
-				+emoji(client,"epiccoin")+" "+emoji(client,"edgysword")+" "+emoji(client,"ancientdragon")
-				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword")
-	},
-	usage: "cook",
+	description: "Used to cook items to get permanent boosts, check its recipes with `recipes cook`",
+	usage: "cook [item] [amount]",
 	aliases: [],
 	higher_tiers: "none",
 	tiers: [{area:5, name:"cook"}]
