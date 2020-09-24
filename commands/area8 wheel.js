@@ -8,13 +8,8 @@ exports.run = async (client, message, args) => {
 exports.help = {
 	name: "wheel",
 	title: "Wheel",
-	description: client => {
-		return "Comando para probar weas y debuggear el bot qliao."
-				+"\n\nMira que bonitos mis emojis "
-				+emoji(client,"epiccoin")+" "+emoji(client,"edgysword")+" "+emoji(client,"ancientdragon")
-				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword")
-	},
-	usage: "wheel",
+	description: "Used to bet your coins in a wheel, each color has a different reward",
+	usage: "wheel [amount]",
 	aliases: [],
 	higher_tiers: "none",
 	tiers: [{area:8, name:"wheel"}]

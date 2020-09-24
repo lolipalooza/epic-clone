@@ -75,7 +75,7 @@ exports.run = async(client, message, args, level) => {
 		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" ")) || hasTierCommand(client, command)){
 			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" ")) || getTierCommand(client, command)
 			if (!_command.help.title || !_command.help.description)
-				return			
+				return message.channel.send("**Error:** comando no reconocido, revisa la sintaxis.\nConsulta todos los comandos con `"+CONFIG_PREFIX+"help`")
 			let _aliases = _command.help.aliases.join("`, `")
 			_aliases = _aliases ? ", `"+_aliases+"`" : ""
 			embed.setTitle(`${_command.help.title}`)
@@ -85,7 +85,7 @@ exports.run = async(client, message, args, level) => {
 			embed.addField("Higher Tiers", `${_command.help.higher_tiers}`)
 			return message.channel.send( {embed} )
 		}else{
-			return message.channel.send("**Error:** comando no reconocido, revisa la sintaxis.\nConsulta todos los comandos con `rpg help`")
+			return message.channel.send("**Error:** comando no reconocido, revisa la sintaxis.\nConsulta todos los comandos con `"+CONFIG_PREFIX+"help`")
 		}
 	}
 }
