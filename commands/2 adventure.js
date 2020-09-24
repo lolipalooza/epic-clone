@@ -19,4 +19,7 @@ exports.help = {
 	usage: "adventure",
 	aliases: [ 'adv' ],
 	higher_tiers: "`adventure hardmode`: unlocked in area 14, it has the same enemies but they are stronger and gives better rewards",
+	tiers: [
+		{area:14, name:"adventure hardmode"},
+	],
 }

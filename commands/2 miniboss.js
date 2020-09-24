@@ -44,4 +44,7 @@ exports.help = {
 	usage: "miniboss [@players]",
 	aliases: [],
 	higher_tiers: "`not so mini boss`: Unlocked in area 10, a stronger boss with better rewards!",
+	tiers: [
+		{area:10, name:"not so mini boss"},
+	],
 }

@@ -30,4 +30,9 @@ exports.help = {
 	higher_tiers: "`axe`: Unlocked in area 3, provides more items than `chop`"
 		+"`bowsaw`: Unlocked in area 6, provides more items than `axe`"
 		+"`chainsaw`: Unlocked in area 9, provides more items than `bowsaw`",
+	tiers: [
+		{area:3, name:"axe"},
+		{area:6, name:"bowsaw"},
+		{area:9, name:"chansaw"},
+	],
 }

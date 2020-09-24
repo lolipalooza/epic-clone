@@ -51,4 +51,9 @@ exports.help = {
 	higher_tiers: "`hunt together`: unlocked while married, both players will hunt together and there is no chance to die (both cooldown required)\n"
 		+"`hunt alone`: unlocked in level 50, your horse will not help you and the enemies are way stronger\n"
 		+"`hunt hardmode`: unlocked in area 13, it has the same enemies but they are stronger and gives better rewards\n",
+	tiers: [
+		{area:0, name:"hunt together"},
+		{area:0, name:"hunt alone"},
+		{area:13, name:"hunt hardmode"},
+	],
 }

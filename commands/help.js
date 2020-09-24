@@ -1,6 +1,24 @@
 const Discord = require("discord.js")
 const fs = require('fs')
 const emoji = require('../functions/utils.js').emoji
+const hasTierComand = require('../functions/utils.js').hasTierComand
+
+var areas = [
+	{area: 2,	icon: ":zero::two:",	commands: []},
+	{area: 3,	icon: ":zero::three:",	commands: []},
+	{area: 4,	icon: ":zero::four:",	commands: []},
+	{area: 5,	icon: ":zero::five:",	commands: []},
+	{area: 6,	icon: ":zero::six:",	commands: []},
+	{area: 7,	icon: ":zero::seven:",	commands: []},
+	{area: 8,	icon: ":zero::eight:",	commands: []},
+	{area: 9,	icon: ":zero::nine:",	commands: []},
+	{area:10,	icon: ":one::zero:",	commands: []},
+	{area:11,	icon: ":one::one:",		commands: []},
+	{area:12,	icon: ":one::two:",		commands: []},
+	{area:13,	icon: ":one::three:",	commands: []},
+	{area:14,	icon: ":one::four:",	commands: []},
+	{area:15,	icon: ":one::five:",	commands: []},
+]
 
 exports.run = async(client, message, args, level) => {
 	//let prefix = JSON.parse( fs.readFileSync('./data.json') ).prefix
@@ -15,6 +33,13 @@ exports.run = async(client, message, args, level) => {
 		client.commands.forEach(command => {
 			if(command.help.category)
 				myCommands.push(command)
+			if(command.help.tiers)
+				command.help.tiers.forEach(tier => {
+					for(let i=0; i<areas.length; i++) {
+						if (areas[i].area == tier.area)
+							areas[i].commands.push(tier.name)
+					}
+				})
 		})
 		embed.setThumbnail(client.user.avatarURL)
 		embed.setAuthor("Lista de Comandos", client.user.avatarURL)
@@ -34,29 +59,22 @@ exports.run = async(client, message, args, level) => {
 			lastCat = cat;
 		})
 		embed.addField(cat,o)
-		embed.addField(emoji(client,"ancientdragon")+" Commands unlocked on higher areas "+emoji(client,"ancientdragon"),
-			":zero::two: `a` `b`\n" +
-			":zero::three: `a` `b`\n" +
-			":zero::four: `a`\n" +
-			":zero::five: `a`\n" +
-			":zero::six: `a`\n" +
-			":zero::seven: `a`\n" +
-			":zero::eight: `a`\n" +
-			":zero::nine: `a`\n" +
-			":one::zero: `a`\n" +
-			":one::one: `a`\n" +
-			":one::two: `a`\n" +
-			":one::three: `a`\n" +
-			":one::four: `a`\n" +
-			":one::five: `a`\n" +
-			"")
+		
+		// Area Commands
+		let field = ""
+		areas.forEach(item => {
+			field += (item.icon+" "+(item.commands.length>0?("`"+item.commands.join("` `")+"`"):"")+"\n")
+		})
+		embed.addField(""+emoji(client,"ancientdragon")+" Commands unlocked on higher areas "+emoji(client,"ancientdragon"), field)
 		embed.addField("Links", "**[Link de invitación](https://discord.com/api/oauth2/authorize?client_id=755830117384847620&permissions=0&scope=bot) | [Server del Bot](https://discord.gg/vHxfwv) | Patreon (**no tengo :V**)**")
 		embed.setFooter("RPG CLON - Una mala copia de EPIC RPG, llena de bugs y que quedará inconclusa...", client.user.avatarURL)
 		return message.channel.send({embed});
 		
 	}else{
-		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" "))){
+		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" ")) || hasTierComand(client, command)){
 			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" "));
+			if (!_command.help.title || !_command.help.description)
+				return			
 			let _aliases = _command.help.aliases.join("`, `")
 			_aliases = _aliases ? ", `"+_aliases+"`" : ""
 			embed.setTitle(`${_command.help.title}`)

@@ -13,6 +13,16 @@ module.exports.emoji = (client,entry) => {
 	} else return ""
 }
 
+module.exports.hasTierComand = (client, tier_command) => {
+	client.commands.forEach(command => {
+		if (command.help.tiers)
+			if (command.help.tiers.filter(tier => {return tier.name==tier_command}).length > 0)
+				return true
+			else return false
+		else return false
+	})
+}
+
 // Debugging only
 module.exports.getMinsMaxs = (min, max) => {
 	var _min = (max-min)/2,

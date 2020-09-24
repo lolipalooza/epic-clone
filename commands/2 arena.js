@@ -50,4 +50,7 @@ exports.help = {
 	usage: "arena [@players]",
 	aliases: [],
 	higher_tiers: "`big arena`: Unlocked in area 7, a harder arena with better rewards!",
+	tiers: [
+		{area:7, name:"big arena"},
+	],
 }
