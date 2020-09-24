@@ -1,7 +1,8 @@
 const Discord = require("discord.js")
 const fs = require('fs')
 const emoji = require('../functions/utils.js').emoji
-const hasTierComand = require('../functions/utils.js').hasTierComand
+const hasTierCommand = require('../functions/utils.js').hasTierCommand
+const getTierCommand = require('../functions/utils.js').getTierCommand
 
 var areas = [
 	{area: 2,	icon: ":zero::two:",	commands: []},
@@ -71,8 +72,8 @@ exports.run = async(client, message, args, level) => {
 		return message.channel.send({embed});
 		
 	}else{
-		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" ")) || hasTierComand(client, command)){
-			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" "));
+		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" ")) || hasTierCommand(client, command)){
+			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" ")) || getTierCommand(client, command)
 			if (!_command.help.title || !_command.help.description)
 				return			
 			let _aliases = _command.help.aliases.join("`, `")

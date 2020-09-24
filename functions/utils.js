@@ -13,14 +13,26 @@ module.exports.emoji = (client,entry) => {
 	} else return ""
 }
 
-module.exports.hasTierComand = (client, tier_command) => {
+module.exports.hasTierCommand = (client, tier_command) => {
+	let hasTier = false
 	client.commands.forEach(command => {
-		if (command.help.tiers)
+		if (command.help.tiers){
 			if (command.help.tiers.filter(tier => {return tier.name==tier_command}).length > 0)
-				return true
-			else return false
-		else return false
+				hasTier = true
+		}
 	})
+	return hasTier
+}
+
+module.exports.getTierCommand = (client, tier_command) => {
+	let _command = undefined
+	client.commands.forEach(command => {
+		if (command.help.tiers){
+			if (command.help.tiers.filter(tier => {return tier.name==tier_command}).length > 0)
+				_command = command
+		}
+	})
+	return _command
 }
 
 // Debugging only
