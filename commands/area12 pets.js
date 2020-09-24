@@ -9,12 +9,11 @@ exports.help = {
 	name: "pets",
 	title: "Pets",
 	description: client => {
-		return "Comando para probar weas y debuggear el bot qliao."
-				+"\n\nMira que bonitos mis emojis "
-				+emoji(client,"epiccoin")+" "+emoji(client,"edgysword")+" "+emoji(client,"ancientdragon")
-				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword")
+		return "Shows your pets\n"
+			+"To unlock this command you need at least one pet, pets are found in `training` after the second `time travel`, earned in tier IX horse races or obtained in special events\n"
+			+"It is possible to sort your pets by **tier**, **type** or **status** with [sort], and see other pages with [page] (it's possible to use both)"
 	},
-	usage: "pets",
+	usage: "pets [sort/page]",
 	aliases: ['pet'],
 	higher_tiers: "none",
 	tiers: [{area:12, name:"time travel"}],
