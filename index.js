@@ -23,6 +23,16 @@ fs.readdir("./commands/", (err, files) => {
     })
 })
 
+fs.readdir("./items/", (err, files) => {
+    if (err) return console.log(err)
+    files.forEach(file => {
+        if (!file.endsWith(".js")) return
+        let props = require(`./items/${file}`)
+        let itemName = file.split(".")[0]
+        client.items.set(itemName, props)
+    })
+})
+
 fs.readdir('./events/', (err, files) => {
 	files.forEach(file => {
 		const eventHandler = require(`./events/${file}`)
