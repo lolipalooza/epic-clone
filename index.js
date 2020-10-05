@@ -8,6 +8,7 @@ CONFIG_PREFIX = "f "
 
 client.commands = new Discord.Collection()
 client.command_aliases = new Discord.Collection()
+client.items = new Discord.Collection()
 
 fs.readdir("./commands/", (err, files) => {
     if (err) return console.log(err)

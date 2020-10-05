@@ -7,14 +7,10 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
 	name: "coin",
-	title: "Test",
-	description: (client, message) => {console.log
-		return "Comando para probar weas y debuggear el bot qliao."
-				+"\n\nMira que bonitos mis emojis "
-				+emoji(client,"epiccoin")+" "+emoji(client,"edgysword")+" "+emoji(client,"ancientdragon")
-				+", los saqué de 3 servers diferentes. Inteligente no? "+emoji(client,"edgysword")
+	title: "Coin",
+	description: client => {
+		return ""+emoji(client,"coin")+" The main currency in the game\n"
+			+"Obtained with fighting, economy and gambling commands"
 	},
-	usage: "test",
-	aliases: [],
-	higher_tiers: "none",
+	value: "Well 1 coin i guess",
 }
