@@ -29,7 +29,7 @@ fs.readdir("./items/", (err, files) => {
     files.forEach(file => {
         if (!file.endsWith(".js")) return
         let props = require(`./items/${file}`)
-        let itemName = file.split(".")[0]
+        let itemName = props.help.name
         client.items.set(itemName, props)
     })
 })

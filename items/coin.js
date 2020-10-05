@@ -1,10 +1,6 @@
 const Discord = require('discord.js')
 const emoji = require('../functions/utils.js').emoji
 
-exports.run = async (client, message, args) => {
-	message.channel.send( "Emojis: "+emoji(client,"epiccoin")+" "+emoji(client,"edgysword") )
-}
-
 exports.help = {
 	name: "coin",
 	title: "Coin",
