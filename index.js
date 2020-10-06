@@ -15,7 +15,7 @@ fs.readdir("./commands/", (err, files) => {
     files.forEach(file => {
         if (!file.endsWith(".js")) return
         let props = require(`./commands/${file}`)
-        let commandName = props.help.name //file.split(".")[0]
+        let commandName = props.help.name.toLowerCase() //file.split(".")[0]
         client.commands.set(commandName, props)
 		if (props.help.aliases.length > 0)
 			props.help.aliases.forEach(alias => {

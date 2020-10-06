@@ -72,7 +72,12 @@ exports.run = async(client, message, args, level) => {
 		return message.channel.send({embed});
 		
 	}else{
-		if (client.commands.has(command) || client.command_aliases.has(command) || client.commands.has(args.join(" ")) || hasTierCommand(client, command)){
+		if (
+			(client.commands.has(command) || client.command_aliases.has(command)
+				|| client.commands.has(args.join(" ")) || hasTierCommand(client, command))
+			&& !(client.items.has(args.join(" ")))
+			)
+		{
 			let _command = client.commands.get(command) || client.command_aliases.get(command) || client.commands.get(args.join(" ")) || getTierCommand(client, command)
 			if (!_command.help.title || !_command.help.description)
 				return message.channel.send("**Error:** comando no reconocido, revisa la sintaxis.\nConsulta todos los comandos con `"+CONFIG_PREFIX+"help`")
@@ -85,14 +90,13 @@ exports.run = async(client, message, args, level) => {
 			embed.addField("Higher Tiers", `${_command.help.higher_tiers}`)
 			return message.channel.send( {embed} )
 		} else if (client.items.has(command) || client.items.has(args.join(" "))) {
-			let item = client.items.get(command) || client.items.get(args.join(" "))
+			let item = client.items.get(args.join(" ")) || client.items.get(command)
 			embed.setTitle(`${item.help.title}`)
 			embed.setDescription( typeof(item.help.description)=="string" ? item.help.description : item.help.description(client) )
 			embed.addField(`Sale Value`, item.help.value)
 			embed.setFooter(`not what you were looking for? see all commands with "${prefix}help"`)
 			return message.channel.send( {embed} )
 		}else{
-			console.log(args)
 			return message.channel.send("**Error:** comando no reconocido, revisa la sintaxis.\n"
 				+"Consulta todos los comandos con `"+CONFIG_PREFIX+"help`")
 		}
