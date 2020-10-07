@@ -29,7 +29,7 @@ fs.readdir("./items/", (err, files) => {
     files.forEach(file => {
         if (!file.endsWith(".js")) return
         let props = require(`./items/${file}`)
-        let itemName = props.help.name
+        let itemName = props.help.name.toLowerCase()
         client.items.set(itemName, props)
     })
 })
