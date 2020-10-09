@@ -46,14 +46,14 @@ exports.run = async (client, message, args) => {
 		{area: 13,	name: "Teen Dragon"},
 		{area: 13,	name: "Scaled Teen Dragon"},
 	]
-	let area_monsters = monsters.filter(monster => { return monster.area === player.area })
+	let area_monsters = monsters.filter(monster => { return monster.area === player.profile.area })
 	let monster = area_monsters[rand(0,area_monsters.length-1)]
 	let monsterName = monster.name.toUpperCase()
-	let monsterIcon = emoji(client, monster.name.replaceAll(" ", "").toLowerCase())
+	let monsterIcon = emoji(client, monster.name.replace(/ /g, "").toLowerCase())
 
-	let coins = player.area * player.area * 12.67
-	let exp = player.area * player.area * 8 * (1 + 51.5*player.time_travels/100)
-	let sum = 82 * player.area - 59
+	let coins = parseInt((player.profile.area * player.profile.area * 12.67).toFixed())
+	let exp = parseInt((player.profile.area * player.profile.area * 8 * (1 + 51.5*player.time_travels/100)).toFixed())
+	let sum = 82 * player.profile.area - 59
 	let dmg = player.stats.attack + player.stats.def - sum
 	dmg = dmg < 0 ? dmg : 0
 
@@ -79,28 +79,44 @@ exports.run = async (client, message, args) => {
 	]
 	
 	let monsterdrop = monsterdrops.filter(drop => {
-		return new RegExp(drop.monster.toLowerCase().replaceAll(" ", "")).test(monster.name.replaceAll(" ", "").toLowerCase())
+		return new RegExp(drop.monster.toLowerCase().replace(/ /g, "")).test(monster.name.replace(/ /g, "").toLowerCase())
 	})
 	let lootbox = lootboxes[rand(0,lootboxes.length-1)]
 
-	let md_message="", lb_message="", level_up_msg=""
-	if (monsterdrop.length>0 && monsterDropEvent <= Math.round(4*(1 + 25,75*player.time_travels/100))) {
+	console.log({
+		length: monsterdrop.length,
+		dropEvent: rand(1,100),
+		event: Math.round(4*(1 + (25,75*player.time_travels/100))),
+	})
+
+	let md_message="", lb_message="", level_up_msg="", drop_msg = ""
+	if (monsterdrop.length>0 && monsterDropEvent <= Math.round(4*(1 + (25,75*player.time_travels/100)))) {
 		md_message = `\n**${message.author.username}** got an ${monsterdrop.icon} ${monsterdrop.name}`
 		lb_message = `\n**${message.author.username}** got a ${lootbox.name} ${lootbox.icon}`
+		if (/*rand(1,100)<=60*/ true ) {
+			drop_msg = md_message
+			let drop = monsterdrop.name.replace(/ /g, "")
+			player.inventory[drop] = player.inventory[drop] ? player.inventory[drop]+1 : 1
+		} else {
+			drop_msg = lb_message
+			player.inventory[drop] = player.inventory[drop] ? player.inventory[drop]+1 : 1
+		}
 	}
-	let drop_msg = rand(1,100)<=60 ? md_message : lb_message
-	
-	if (player.profile.exp >= player.profile.max_exp) {
+
+	let max_exp = player.profile.level*player.profile.level*125
+	if (player.profile.exp >= max_exp) {
 		level_up_msg = `\n**${message.author.username} leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE`
-		player.profile.exp = player.profile.exp - player.profile.max_exp
+		player.profile.exp = player.profile.exp - max_exp
 		player.profile.level += 1
 	}
 	
 	message.channel.send(
 		`**${message.author.username}** found and killed a ${monsterIcon} **${monsterName}**\n`
-		+`Earned ${coins} coins and ${exp} XP\n`
-		+`Lost ${dmg} HP, remaining HP is ${172}/${200}`
+		+`Earned ${new Intl.NumberFormat('en-US').format(coins)} coins and ${new Intl.NumberFormat('en-US').format(exp)} XP\n`
+		+`Lost ${dmg} HP, remaining HP is ${player.stats.hp}/${player.stats.max_hp}`
 		+drop_msg+level_up_msg)
+
+	require('../utils/data').store(message.author.discriminator, player)
 }
 
 exports.help = {

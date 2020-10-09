@@ -5,6 +5,9 @@ exports.run = async (client, message, args) => {
 	let embed = new Discord.RichEmbed()
 	let player = require('../utils/data').get(message.author.discriminator)
 
+	let max_hp = player.profile.level*player.profile.level*125
+	let progress = (player.profile.exp/max_hp*100).toFixed(2)
+
 	let enchantments = ['Not enchanted', 'Normie', 'Good', 'Great', 'Mega',
 		'Epic', 'Hyper', 'Ultimate', 'Perfect', 'Edgy', 'Ultra-Edgy', 'Omega', 'Ultra-Omega', 'Godly']
 	
@@ -14,8 +17,8 @@ exports.run = async (client, message, args) => {
 	embed.setDescription(`**${player.title}**`)
 	embed.addField(
 		"PROGRESS", ""
-		+`**Level**: ${player.profile.level} (${player.profile.exp/player.profile.max_exp*100}%)\n`
-		+`**XP**: ${new Intl.NumberFormat('en-US').format(player.profile.exp)}/${new Intl.NumberFormat('en-US').format(player.profile.max_exp)}\n`
+		+`**Level**: ${player.profile.level} (${progress}%)\n`
+		+`**XP**: ${new Intl.NumberFormat('en-US').format(player.profile.exp)}/${new Intl.NumberFormat('en-US').format(max_hp)}\n`
 		+`**Area**: ${player.profile.area} (Max: ${player.profile.max_area})`)
 	embed.addField(
 		"STATS", ""
