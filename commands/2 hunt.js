@@ -54,12 +54,26 @@ exports.run = async (client, message, args) => {
 	let coins = parseInt((player.profile.area * player.profile.area * 12.67).toFixed())
 	let exp = parseInt((player.profile.area * player.profile.area * 8 * (1 + 51.5*player.time_travels/100)).toFixed())
 	let sum = 82 * player.profile.area - 59
-	let dmg = player.stats.attack + player.stats.def - sum
-	dmg = dmg < 0 ? dmg : 0
+	let dmg = player.stats.attack + player.stats.defense - sum
+	dmg = dmg < 0 ? Math.abs(dmg) : 0
+
+	player.stats.hp -= dmg
+
+	if (player.stats.hp <= 0) {
+		let msg = `**${message.author.username}** found a ${monsterIcon} ${monsterName}, but lost fighting`
+		if (player.profile.level>1) {
+			player.profile.level -= 1
+			msg += `\nBrave you were. Dead you are. A level you lost`
+		}
+		player.profile.exp = 0
+		player.stats.hp = player.stats.max_hp
+		message.channel.send(msg)
+		require('../utils/data').store(message.author.discriminator, player)
+		return
+	}
 
 	player.stats.coins += coins
 	player.profile.exp += exp
-	player.stats.hp -= dmg
 
 	let monsterDropEvent = rand(1,100)
 	let monsterdrops = [
@@ -78,24 +92,25 @@ exports.run = async (client, message, args) => {
 		{icon:emoji(client,"edgylootbox"),		name:"edgy lootbox"},
 	]
 	
-	let monsterdrop = monsterdrops.filter(drop => {
-		return new RegExp(drop.monster.toLowerCase().replace(/ /g, "")).test(monster.name.replace(/ /g, "").toLowerCase())
-	})
 	let lootbox = lootboxes[rand(0,lootboxes.length-1)]
 
-	console.log({
-		length: monsterdrop.length,
-		dropEvent: rand(1,100),
-		event: Math.round(4*(1 + (25,75*player.time_travels/100))),
-	})
-
 	let md_message="", lb_message="", level_up_msg="", drop_msg = ""
-	if (monsterdrop.length>0 && monsterDropEvent <= Math.round(4*(1 + (25,75*player.time_travels/100)))) {
-		md_message = `\n**${message.author.username}** got an ${monsterdrop.icon} ${monsterdrop.name}`
+	if (monsterDropEvent <= Math.round(4*(1 + (25,75*player.time_travels/100)))) {
+		let monsterdrop
+		area_monsters.forEach(m => {
+			monsterdrop = monsterdrops.filter(drop => {
+				return new RegExp(drop.monster.toLowerCase().replace(/ /g, "")).test(m.name.replace(/ /g, "").toLowerCase())
+			})
+			if (monsterdrop.length>0) {
+				monsterName = m.name.toUpperCase()
+				monsterIcon = emoji(client, m.name.replace(/ /g, "").toLowerCase())
+			}
+		})
+		md_message = `\n**${message.author.username}** got an ${monsterdrop[0].icon} ${monsterdrop[0].name}`
 		lb_message = `\n**${message.author.username}** got a ${lootbox.name} ${lootbox.icon}`
-		if (/*rand(1,100)<=60*/ true ) {
+		if (rand(1,100)<=60 || true) {
 			drop_msg = md_message
-			let drop = monsterdrop.name.replace(/ /g, "")
+			let drop = monsterdrop[0].name.replace(/ /g, "")
 			player.inventory[drop] = player.inventory[drop] ? player.inventory[drop]+1 : 1
 		} else {
 			drop_msg = lb_message

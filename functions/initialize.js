@@ -6,7 +6,6 @@ module.exports = discriminator => {
 		profile: {
 			level: 1,
 			exp: 0,
-			max_exp: 100,
 			area: 1,
 			max_area: 1,
 		},
