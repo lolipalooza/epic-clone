@@ -1,13 +1,13 @@
 const st = require('./save')
-const filepath = './simdate.SAV'
+const file = './epic-clon.SAV'
 
-module.exports.get = (userDisc) => {
-	let data = st.load(filepath)
-	return data[userDisc]
+module.exports.get = userDiscriminator => {
+	let data = st.load(file)
+	return data[userDiscriminator]
 }
 
-module.exports.store = (userDisc, userdata) => {
-	let data = st.load(filepath)
-	data[userDisc] = userdata
-	st.save(filepath, data)
+module.exports.store = (userDiscriminator, userdata) => {
+	let data = st.load(file)
+	data[userDiscriminator] = userdata
+	st.save(file, data)
 }

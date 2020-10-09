@@ -1,10 +1,9 @@
 require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const auth = require('./auth.json')
 const fs = require('fs')
 
-CONFIG_PREFIX = "f "
+CONFIG_PREFIX = require('./config.json').prefix
 
 client.commands = new Discord.Collection()
 client.command_aliases = new Discord.Collection()

@@ -3,37 +3,104 @@ const emoji = require('../functions/utils.js').emoji
 const rand = require('../functions/utils.js').rand
 
 exports.run = async (client, message, args) => {
-	let monsterDropEvent = rand(0,100)
+	let player = require('../utils/data').get(message.author.discriminator)
+
+	let monsters = [
+		{area: 1,	name: "Goblin"},
+		{area: 1,	name: "Slime"},
+		{area: 1,	name: "Wolf"},
+		{area: 2,	name: "Nymph"},
+		{area: 2,	name: "Skeleton"},
+		{area: 2,	name: "Wolf"},
+		{area: 3,	name: "Baby Demon"},
+		{area: 3,	name: "Ghost"},
+		{area: 3,	name: "Zombie"},
+		{area: 4,	name: "Imp"},
+		{area: 4,	name: "Witch"},
+		{area: 4,	name: "Zombie"},
+		{area: 5,	name: "Ghoul"},
+		{area: 5,	name: "Giant Scorpion"},
+		{area: 5,	name: "Unicorn"},
+		{area: 6,	name: "Baby Robot"},
+		{area: 6,	name: "Sorcerer"},
+		{area: 6,	name: "Unicorn"},
+		{area: 7,	name: "Cecaelia"},
+		{area: 7,	name: "Giant Piranha"},
+		{area: 7,	name: "Mermaid"},
+		{area: 8,	name: "Giant Crocodile"},
+		{area: 8,	name: "Nereid"},
+		{area: 8,	name: "Mermaid"},
+		{area: 9,	name: "Demon"},
+		{area: 9,	name: "Harpy"},
+		{area: 9,	name: "Killer Robot"},
+		{area: 10,	name: "Dullahan"},
+		{area: 10,	name: "Manticore"},
+		{area: 10,	name: "Killer Robot"},
+		{area: 11,	name: "Baby Dragon"},
+		{area: 11,	name: "Young Dragon"},
+		{area: 11,	name: "Scaled Baby Dragon"},
+		{area: 12,	name: "Kid Dragon"},
+		{area: 12,	name: "Not so young Dragon"},
+		{area: 12,	name: "Scaled Kid Dragon"},
+		{area: 13,	name: "Definitely not so young Dragon"},
+		{area: 13,	name: "Teen Dragon"},
+		{area: 13,	name: "Scaled Teen Dragon"},
+	]
+	let area_monsters = monsters.filter(monster => { return monster.area === player.area })
+	let monster = area_monsters[rand(0,area_monsters.length-1)]
+	let monsterName = monster.name.toUpperCase()
+	let monsterIcon = emoji(client, monster.name.replaceAll(" ", "").toLowerCase())
+
+	let coins = player.area * player.area * 12.67
+	let exp = player.area * player.area * 8 * (1 + 51.5*player.time_travels/100)
+	let sum = 82 * player.area - 59
+	let dmg = player.stats.attack + player.stats.def - sum
+	dmg = dmg < 0 ? dmg : 0
+
+	player.stats.coins += coins
+	player.profile.exp += exp
+	player.stats.hp -= dmg
+
+	let monsterDropEvent = rand(1,100)
 	let monsterdrops = [
-	{icon:emoji(client,"wolfskin"),		name:"wolf skin"},
-	{icon:emoji(client,"zombieeye"),	name:"zombie eye"},
-	{icon:emoji(client,"unicornhorn"),	name:"unicorn horn"},
-	{icon:emoji(client,"mermaidhair"),	name:"mermaid hair"},
-	{icon:emoji(client,"chip"),			name:"chip"},
-	{icon:emoji(client,"dragonscale"),	name:"dragon scale"},
+		{icon:emoji(client,"wolfskin"),		name:"wolf skin",		monster: "wolf"},
+		{icon:emoji(client,"zombieeye"),	name:"zombie eye",		monster: "zombie"},
+		{icon:emoji(client,"unicornhorn"),	name:"unicorn horn",	monster: "unicorn"},
+		{icon:emoji(client,"mermaidhair"),	name:"mermaid hair",	monster: "mermaid"},
+		{icon:emoji(client,"chip"),			name:"chip",			monster: "Killer Robot"},
+		{icon:emoji(client,"dragonscale"),	name:"dragon scale",	monster: "Scaled"},
 	]
 	let lootboxes = [
-	{icon:emoji(client,"commonlootbox"),name:"common lootbox"},
-	{icon:emoji(client,"uncommonlootbox"),name:"uncommon lootbox"},
-	{icon:emoji(client,"rarelootbox"),name:"rare lootbox"},
-	{icon:emoji(client,"epiclootbox"),name:"epic lootbox"},
-	{icon:emoji(client,"edgylootbox"),name:"edgy lootbox"},
+		{icon:emoji(client,"commonlootbox"),	name:"common lootbox"},
+		{icon:emoji(client,"uncommonlootbox"),	name:"uncommon lootbox"},
+		{icon:emoji(client,"rarelootbox"),		name:"rare lootbox"},
+		{icon:emoji(client,"epiclootbox"),		name:"epic lootbox"},
+		{icon:emoji(client,"edgylootbox"),		name:"edgy lootbox"},
 	]
-	let monsterdrop = monsterdrops[rand(0,monsterdrops.length-1)]
+	
+	let monsterdrop = monsterdrops.filter(drop => {
+		return new RegExp(drop.monster.toLowerCase().replaceAll(" ", "")).test(monster.name.replaceAll(" ", "").toLowerCase())
+	})
 	let lootbox = lootboxes[rand(0,lootboxes.length-1)]
-	let icon = monsterdrop.icon
-	let drop = monsterdrop.name
-	let md_message = "\n**"+message.author.username+"** got an "+icon+" "+drop+""
-	icon = lootbox.icon
-	drop = lootbox.name
-	let lb_message = "\n**"+message.author.username+"** got a "+drop+" "+icon+""
-	let msg = rand(0,1)==0 ? md_message : lb_message
+
+	let md_message="", lb_message="", level_up_msg=""
+	if (monsterdrop.length>0 && monsterDropEvent <= Math.round(4*(1 + 25,75*player.time_travels/100))) {
+		md_message = `\n**${message.author.username}** got an ${monsterdrop.icon} ${monsterdrop.name}`
+		lb_message = `\n**${message.author.username}** got a ${lootbox.name} ${lootbox.icon}`
+	}
+	let drop_msg = rand(1,100)<=60 ? md_message : lb_message
+	
+	if (player.profile.exp >= player.profile.max_exp) {
+		level_up_msg = `\n**${message.author.username} leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE`
+		player.profile.exp = player.profile.exp - player.profile.max_exp
+		player.profile.level += 1
+	}
+	
 	message.channel.send(
-		"**"+message.author.username+"** found and killed a :ghoul: **GHOUL**\n"
-		+"Earned 333 coins and 409 XP\n"
-		+"Lost 28 HP, remaining HP is 172/200"
-		+(monsterDropEvent<4?msg:"")
-		+(false?"\n**"+message.author.username+" leveled up!** +1 :dagger: AT, +1 :shield: DEF, +5 :heart: LIFE":""))
+		`**${message.author.username}** found and killed a ${monsterIcon} **${monsterName}**\n`
+		+`Earned ${coins} coins and ${exp} XP\n`
+		+`Lost ${dmg} HP, remaining HP is ${172}/${200}`
+		+drop_msg+level_up_msg)
 }
 
 exports.help = {

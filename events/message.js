@@ -1,8 +1,8 @@
 const fs = require('fs')
+const initialize = require('../functions/initialize')
 
 module.exports = (client, message) => {
 	
-	//let prefix = JSON.parse( fs.readFileSync('./data.json') ).prefix
 	let prefix = CONFIG_PREFIX.toLowerCase()
 	let msg = message.content.toLowerCase()
 
@@ -14,13 +14,24 @@ module.exports = (client, message) => {
 			if (command.help.tiers)
 				command.help.tiers.forEach(tier => {tiers.push(tier.name.toLowerCase())})
 			aliases = (aliases ? "|"+aliases : "") + (tiers.length>0 ? "|"+tiers.join("|") : "")
+
 			if (new RegExp("^"+prefix.trim()+" +(?:"+cmd+aliases+")($| )").test(msg)){
-				let match = msg.match(new RegExp("^"+prefix.trim()+" +(?:"+cmd+aliases+") +(.+?)$"))
-				if (match && match.length>1){
-					const args = match[1].trim().split(/ +/g)
-					command.run(client, message, args)
-				} else {
-					command.run(client, message, [])
+
+				let user = message.author.discriminator
+
+				if ( ! require('../utils/data').get(user) ) {
+					initialize(user)
+					message.channel.send("First time playing, **"+message.author.username+"**? `"+CONFIG_PREFIX+"start`")
+				}
+				
+				else {
+					let match = msg.match(new RegExp("^"+prefix.trim()+" +(?:"+cmd+aliases+") +(.+?)$"))
+					if (match && match.length>1){
+						const args = match[1].trim().split(/ +/g)
+						command.run(client, message, args)
+					} else {
+						command.run(client, message, [])
+					}
 				}
 			}
 		})
